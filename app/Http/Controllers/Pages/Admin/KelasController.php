@@ -63,7 +63,7 @@ class KelasController extends Controller
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="' . route('kelas.admin.show', ['id' => $row->id]) . '">Detail</a>
                                     <a class="dropdown-item" href="' . route('kelas.admin.edit', ['id' => $row->id]) . '">Edit</a>
-                                    <a class="dropdown-item" href="#">Hapus</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" data-id="' . $row->id . '" id="delete">Hapus</a>
                                 </div>
                             </div>';
                     return $btn;
@@ -233,14 +233,26 @@ class KelasController extends Controller
             "users_id" => "required",
         ]);
 
-        // $selectedDosen = $request->input('users_id', []);
+        $selectedDosen = $request->input('users_id', []);
 
-        // $currentDosen = $kelas->dosen()->pluck('id')->toArray();
+        $currentDosen = $kelas->dosen()->pluck('id')->toArray();
 
-        // $dosenToAdd = array_diff($selectedDosen, $currentDosen);
-        // foreach ($dosenToAdd as $dosenId) {
-        //     # code...
-        // }
+        $dosenToRemove = array_diff($currentDosen, $selectedDosen);
+        if (!empty($dosenToRemove)) {
+            foreach ($dosenToRemove as $dosenId) {
+                $kelas->dosen()->where('id', $dosenId)->delete();
+            }
+        }
+
+        $dosenToAdd = array_diff($selectedDosen, $currentDosen);
+        foreach ($dosenToAdd as $dosenId) {
+            $kelas->dosen()->create(['users_id' => $dosenId]);
+        }
+
+        $put = $request->except('users_id');
+        $kelas->update($put);
+
+        return back()->with('message', 'Berhasil mengubah data kelas.');
     }
 
     /**
@@ -248,6 +260,14 @@ class KelasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $kelas = kelas::find($id);
+
+        if (!$kelas) {
+            return response()->json(['code' => 404, 'status' => 'error', 'message' => 'Data Kelas Tidak Ditemukan.']);
+        }
+
+        $kelas->delete();
+
+        return response()->json(['code' => 200, 'status' => 'success', 'message' => 'Berhasil menghapus data kelasa.']);
     }
 }

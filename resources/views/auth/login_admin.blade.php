@@ -1,6 +1,6 @@
 @extends('layouts.auth')    
 
-@section('title', 'Login Admin')
+@section('title', 'Login')
 
 @section('content')
     <form method="POST" action="{{route('login.admin.post')}}" class="needs-validation" novalidate="">

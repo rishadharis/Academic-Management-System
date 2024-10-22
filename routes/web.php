@@ -21,16 +21,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('login')->group(function () {
-    // login admin
-    Route::prefix('admin')->group(function () {
-        Route::get('/', [AuthAdminController::class, 'index'])->name('login.admin');
-        Route::post('/login', [AuthAdminController::class, 'login'])->name('login.admin.post');
-        Route::get('/logout', [AuthAdminController::class, 'logout'])->name('logout.admin')->middleware(['auth']);
-    });
-
-    // login dosen
-});
+Route::get('/', [AuthAdminController::class, 'index'])->name('login');
+Route::post('/login', [AuthAdminController::class, 'login'])->name('login.admin.post');
+Route::get('/logout', [AuthAdminController::class, 'logout'])->name('logout.admin')->middleware(['auth']);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::prefix('portal')->group(function () {
@@ -81,6 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/{id}/show', [KelasController::class, 'show'])->name('kelas.admin.show');
                 Route::get('/{id}/edit', [KelasController::class, 'edit'])->name('kelas.admin.edit');
                 Route::put('/{id}/update', [KelasController::class, 'update'])->name('kelas.admin.update');
+                Route::delete('/{id}/destroy', [KelasController::class, 'destroy'])->name('kelas.admin.destroy');
 
                 // add mahasiswa to kelas
                 Route::get('getMahasiswa', [KelasController::class, 'getMahasiswa'])->name('kelas.admin.getMahasiswa');

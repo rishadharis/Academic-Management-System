@@ -51,6 +51,38 @@
                     {data: "action"},
                 ]
             });
+
+            $(document).on('click', '#delete', function() {
+                let id = $(this).data('id');
+                swal({
+                    title: 'Peringatan !',
+                    text: 'Anda yakin ingin menghapus data ini?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: `{{url('portal/admin/kelas/${id}/destroy')}}`,
+                            method: 'DELETE',
+                            dataType: 'json',
+                            success: function(response) {
+                                swal(response.message, {
+                                    icon: response.status,
+                                });
+                                table.draw()
+                            },
+                            error: function(err) {
+                                console.log(err);
+                                swal('Oppss! Server Error', {
+                                    icon: 'error',
+                                });
+                            }
+                        })
+                    }
+                });
+            })
         })
     </script>
 @endpush
