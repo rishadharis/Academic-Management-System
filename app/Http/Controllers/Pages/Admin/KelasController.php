@@ -21,11 +21,17 @@ class KelasController extends Controller
      */
     public function index()
     {
+        $allAkademik = TahunAkademik::select('id', 'name')->orderBy('id', 'DESC')->get();
 
         if (request()->ajax()) {
-            $akademik = request()->akademik;
+            $akademiks_id = request('akademiks_id');
 
-            $kelas = kelas::with(["akademik", "matkul", "dosen", "dosen.user"])->orderBy('id', 'DESC')->get();
+            if (!empty($akademiks_id)) {
+                $kelas = kelas::with(["akademik", "matkul", "dosen", "dosen.user"])->where('tahun_akademiks_id', $akademiks_id)->orderBy('id', 'DESC')->get();
+            } else {
+                $kelas = kelas::with(["akademik", "matkul", "dosen", "dosen.user"])->where('tahun_akademiks_id', $akademiks_id)->orderBy('id', 'DESC')->get();
+            }
+
             return DataTables::of($kelas)
                 ->addColumn('akademik', function ($row) {
                     return $row->akademik->name;
@@ -71,7 +77,7 @@ class KelasController extends Controller
                 ->rawColumns(['dosen', 'action'])
                 ->toJson();
         }
-        return view("pages.admin.kelas.index");
+        return view("pages.admin.kelas.index", compact('allAkademik'));
     }
 
     /**

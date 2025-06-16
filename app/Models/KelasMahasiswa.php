@@ -15,4 +15,9 @@ class KelasMahasiswa extends Model
     {
         return $this->belongsTo(User::class, 'users_id', 'id');
     }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
+    }
 }

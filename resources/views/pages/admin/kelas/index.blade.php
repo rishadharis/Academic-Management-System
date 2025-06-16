@@ -8,10 +8,23 @@
 
 @section('content')
     <div class="card card-primary">
-        <div class="card-header">
-            <a href="{{route('kelas.admin.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
-        </div>
         <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <a href="{{route('kelas.admin.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+                </div>
+                <div>
+                    <form>
+                        <div class="form-group">
+                            <select name="tahun_akademiks_id" id="tahun_akademiks_id" class="form-control w-100">
+                                @foreach ($allAkademik as $akademik)
+                                    <option value="{{$akademik->id}}">{{$akademik->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="table-responsive-lg">
                 <table class="table table-bordered table-striped table-hover table-md" id="table" style="width: 100%">
                     <thead class="bg-primary">
@@ -39,7 +52,13 @@
             let table = $("#table").DataTable({
                 serverSide: true,
                 processing: true,
-                ajax: "{{route('kelas.admin')}}",
+                ajax: {
+                    url: "{{route('kelas.admin')}}",
+                    method: "GET",
+                    data: function(d) {
+                        d.akademiks_id = $("#tahun_akademiks_id").val();
+                    },
+                },
                 columns: [
                     {data: "akademik"},
                     {data: "matkul"},
@@ -50,6 +69,10 @@
                     {data: "dosen"},
                     {data: "action"},
                 ]
+            });
+
+            $("#tahun_akademiks_id").change(function() {
+                table.draw()
             });
 
             $(document).on('click', '#delete', function() {

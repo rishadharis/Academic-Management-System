@@ -1,0 +1,34 @@
+Saya butuh buat Tugas Akhir dan kira-kira yang dibutuhkan untuk AMS seperti ini, apakah bisa mas
+
+Academic Management System
+
+Institusi pendidikkan membutuhkan tools yang efisien untuk me-manage mata kuliah, mahasiswa, dosen, tugas dan penilaian.
+
+Academic Management System di design untuk memudahkan proses seperti course management, user management, assesments, dan juga scheduling.
+
+Fitur yang dibutuhkan:
+- Pengumpulan Tugas (PDF, Docx, PPT, dll)
+- Tahun Akademik (Semester) -> Periode perkuliahan
+- Master Data (Kelas, Mata Kuliah, Dosen, Mahasiswa)
+- Jadwal perkuliahan dan deadline tugas (Kalender Akademik)
+- Notifikasi
+- Penilaian UTS/UAS
+
+Flow
+Admin:
+- Input data mahasiswa dan dosen
+- Input mata kuliah
+- Input data tahun akademik
+- Input data kelas dan assign tahun akademik, mata kuliah, mahasiswa, dosen, tanggal UAS dan UTS.
+
+Dosen:
+- Bisa pilih dan lihat tahun akademik dan juga kelas
+- Buat tugas dan assign ke kelas dengan deadline
+- Buat jadwal perkuliahan (assign kelas dan jadwal)
+- Penilaian UTS dan UAS (setiap kelas)
+- Melihat jadwal (kalender)
+
+Mahasiswa:
+- Memilih dan melihat tahun akademik dan kelas
+- Melihat jadwal (kalender)
+- Submit tugas yang dibuat dosen

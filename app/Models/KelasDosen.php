@@ -11,6 +11,11 @@ class KelasDosen extends Model
     protected $table = 'kelas_dosens';
     protected $guarded = [];
 
+    public function kelas()
+    {
+        return $this->belongsTo(kelas::class, 'kelas_id', 'id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'users_id', 'id');

@@ -28,7 +28,13 @@ class AuthAdminController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 Auth::login($user);
-                return redirect()->route('dashboard.admin');
+                if (Auth::user()->roles[0]->name === "Admin") {
+                    return redirect()->route('dashboard.admin');
+                } else if (Auth::user()->roles[0]->name === "Dosen") {
+                    return redirect()->route('dashboard.dosen');
+                } else {
+                    return redirect()->route('dashboard.mahasiswa');
+                }
             } else {
                 return back()->with('message', 'Username/Password Salah.');
             }
@@ -42,6 +48,6 @@ class AuthAdminController extends Controller
         Auth::logout();
         Session::flush();
 
-        return redirect()->route('login.admin');
+        return redirect()->route('login');
     }
 }

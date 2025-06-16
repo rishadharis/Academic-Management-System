@@ -12,19 +12,9 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title">{{Auth::user()->email}}</div>
-                @if (Auth::user()->roles[0]->name === "Admin")
-                    <a href="{{route('logout.admin')}}" class="dropdown-item has-icon text-danger">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                @elseif(Auth::user()->roles[0]->name === "Dosen")
-                    <a href="#" class="dropdown-item has-icon text-danger">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                @else
-                    <a href="#" class="dropdown-item has-icon text-danger">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                @endif
+                <a href="{{route('logout.admin')}}" class="dropdown-item has-icon text-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
             </div>
         </li>
     </ul>
